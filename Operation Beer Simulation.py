@@ -30,8 +30,10 @@ you can edit initial inventories and pipelines in main().
 
 from collections import deque
 import copy
+from contextlib import redirect_stdout
 from dataclasses import dataclass
 from itertools import product
+import os
 from typing import Deque, Dict, List, Optional, Tuple
 
 
@@ -42,6 +44,12 @@ ORDER_DELAY = 2
 SHIP_DELAY = 2
 PROD_DELAY = 2  # factory production time
 ROLE_NAMES = ["Retailer", "Wholesaler", "Distributor", "Factory"]
+FLUCTUATING_DEMAND_35 = [
+    80, 120, 95, 110, 90, 130, 85, 115, 100, 105,
+    75, 125, 98, 102, 88, 112, 92, 108, 70, 140,
+    96, 104, 86, 114, 94, 106, 82, 118, 97, 103,
+    89, 111, 93, 107, 60,
+]
 
 
 def get_int_input(prompt: str, default: Optional[int] = None, min_value: int = 0) -> int:
@@ -393,6 +401,15 @@ def _mean_int(values: List[int], fallback: int = 100) -> int:
     return int(round(sum(values) / len(values)))
 
 
+def _build_preset_fluctuating_demand(weeks: int) -> List[int]:
+    if weeks <= len(FLUCTUATING_DEMAND_35):
+        return FLUCTUATING_DEMAND_35[:weeks]
+    extended = FLUCTUATING_DEMAND_35[:]
+    while len(extended) < weeks:
+        extended.extend(FLUCTUATING_DEMAND_35)
+    return extended[:weeks]
+
+
 def get_customer_demand_plan(weeks: int, default: int = 100) -> List[int]:
     print("\nCustomer demand input mode:")
     print("  1) Constant demand every week")
@@ -504,19 +521,36 @@ def run_manual_mode(weeks: int = 35, expected_demand: int = 100) -> None:
 
 def run_optimization_mode() -> None:
     weeks = get_int_input("Number of weeks (Enter=35): ", default=35, min_value=1)
+    print("Demand source:")
+    print("  1) Enter demand week by week")
+    print("  2) Use built-in fluctuating demand preset (avg=100 over 35 weeks)")
+    demand_mode = input("Choose [1/2] (Enter=1): ").strip().lower()
+    if demand_mode in {"q", "quit", "exit"}:
+        raise KeyboardInterrupt
     min_tw = get_int_input("Min base-stock target (weeks of demand, Enter=1): ", default=1, min_value=1)
     max_tw = get_int_input("Max base-stock target (weeks of demand, Enter=6): ", default=6, min_value=min_tw)
     horizon = get_int_input("Look-ahead horizon in weeks (Enter=6): ", default=6, min_value=1)
 
     game = BeerGame4Role(weeks=weeks, expected_demand=100)
     observed_demands: List[int] = []
+    preset_demands: List[int] = []
+    if demand_mode == "2":
+        preset_demands = _build_preset_fluctuating_demand(weeks)
+        print(f"Loaded fluctuating demand preset for {weeks} weeks.")
 
     print("\nRolling optimization mode:")
-    print("Enter customer demand each week; the system optimizes orders for that week, then prints summary.\n")
+    if demand_mode == "2":
+        print("Using preset customer demand each week; the system optimizes orders and prints summary.\n")
+    else:
+        print("Enter customer demand each week; the system optimizes orders for that week, then prints summary.\n")
 
     for week in range(1, weeks + 1):
         print(f"--- Week {week} ---")
-        demand = get_int_input("Customer demand this week (Enter=100): ", default=100, min_value=0)
+        if demand_mode == "2":
+            demand = preset_demands[week - 1]
+            print(f"Customer demand this week (preset): {demand}")
+        else:
+            demand = get_int_input("Customer demand this week (Enter=100): ", default=100, min_value=0)
         observed_demands.append(demand)
         forecast = _mean_int(observed_demands, fallback=100)
         effective_horizon = min(horizon, weeks - week + 1)
@@ -543,6 +577,81 @@ def run_optimization_mode() -> None:
         print(f" - {r.name:11s}: ${r.total_cost:.2f}")
 
 
+def run_rolling_optimization_with_demand_plan(
+    demand_plan: List[int],
+    min_tw: int,
+    max_tw: int,
+    horizon: int,
+) -> None:
+    weeks = len(demand_plan)
+    game = BeerGame4Role(weeks=weeks, expected_demand=100)
+    observed_demands: List[int] = []
+
+    print("\nRolling optimization mode (scenario log run):")
+    print("Using provided demand plan; system optimizes and prints weekly summaries.\n")
+
+    for week in range(1, weeks + 1):
+        print(f"--- Week {week} ---")
+        demand = demand_plan[week - 1]
+        print(f"Customer demand this week (scenario): {demand}")
+        observed_demands.append(demand)
+        forecast = _mean_int(observed_demands, fallback=100)
+        effective_horizon = min(horizon, weeks - week + 1)
+
+        best_policy, _ = optimize_base_stock_policy(
+            demand_plan=[forecast] * effective_horizon,
+            min_target_weeks=min_tw,
+            max_target_weeks=max_tw,
+            base_game=game,
+        )
+        orders = {
+            "Retailer": game._suggest_order_base_stock(game.retailer, target_weeks=best_policy["Retailer"]),
+            "Wholesaler": game._suggest_order_base_stock(game.wholesaler, target_weeks=best_policy["Wholesaler"]),
+            "Distributor": game._suggest_order_base_stock(game.distributor, target_weeks=best_policy["Distributor"]),
+            "Factory": game._suggest_order_base_stock(game.factory, target_weeks=best_policy["Factory"]),
+        }
+        res = game.step_week(week=week, customer_demand=demand, orders=orders)
+        print_week_summary(week, res)
+        print_week_recommendations(week, orders, best_policy)
+
+    print("ROLLING OPTIMIZATION COMPLETE")
+    print(f"Total system cost (sum of all roles): ${game.total_system_cost():.2f}")
+    for r in game.roles:
+        print(f" - {r.name:11s}: ${r.total_cost:.2f}")
+
+
+def export_scenario_logs() -> None:
+    weeks = 35
+    horizon = 6
+    demand_plan = _build_preset_fluctuating_demand(weeks)
+
+    log_dir = os.path.join("Operation", "beer_logs")
+    os.makedirs(log_dir, exist_ok=True)
+
+    scenarios = [
+        ("scenario1_max_inventory_min_backlog_35weeks.log", 6, 6, "Max inventory / Min backlog"),
+        ("scenario2_average_inventory_average_backlog_35weeks.log", 3, 3, "Average inventory / Average backlog"),
+        ("scenario3_optimized_min_total_cost_35weeks.log", 1, 6, "Optimized min total cost"),
+    ]
+
+    for filename, min_tw, max_tw, scenario_label in scenarios:
+        path = os.path.join(log_dir, filename)
+        with open(path, "w", encoding="utf-8") as f:
+            with redirect_stdout(f):
+                print(f"Scenario: {scenario_label}")
+                print(f"Weeks: {weeks} | Min target weeks: {min_tw} | Max target weeks: {max_tw} | Horizon: {horizon}")
+                print(f"Demand plan: fluctuating preset (avg 100 over 35 weeks)")
+                run_rolling_optimization_with_demand_plan(
+                    demand_plan=demand_plan, min_tw=min_tw, max_tw=max_tw, horizon=horizon
+                )
+
+    print("Logs generated:")
+    print(" - scenario1_max_inventory_min_backlog_35weeks.log")
+    print(" - scenario2_average_inventory_average_backlog_35weeks.log")
+    print(" - scenario3_optimized_min_total_cost_35weeks.log")
+    print(f"Saved in: {log_dir}")
+
+
 def main():
     print("Welcome to the FULL Beer Distribution Game Simulator (4 roles)!\n")
     print("Roles: Customer -> Retailer -> Wholesaler -> Distributor -> Factory\n")
@@ -552,12 +661,15 @@ def main():
     print("Modes:")
     print("  1) Manual weekly orders (interactive)")
     print("  2) Enter weekly demand + optimize orders week by week")
+    print("  3) Export 35-week scenario logs")
 
-    mode = input("Choose mode [1/2] (Enter=2): ").strip().lower()
+    mode = input("Choose mode [1/2/3] (Enter=2): ").strip().lower()
     if mode in {"q", "quit", "exit"}:
         raise KeyboardInterrupt
     if mode == "1":
         run_manual_mode()
+    elif mode == "3":
+        export_scenario_logs()
     else:
         run_optimization_mode()
 

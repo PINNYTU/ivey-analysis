@@ -1,0 +1,95 @@
+import numpy as np
+from scipy.stats import norm
+
+# ─── Hotel parameters ───────────────────────────────────────────────────────
+HOTEL_CAPACITY = 100
+LOW_PRICE      = 100
+HIGH_PRICE     = 300
+CRITICAL_RATIO = (HIGH_PRICE - LOW_PRICE) / HIGH_PRICE  # 0.6667
+
+# ─── Simulation ─────────────────────────────────────────────────────────────
+def simulate(low_price_demand_per_week, biz_mean, biz_stdev, protection_level, week_offset=0):
+    booking_limit = HOTEL_CAPACITY - protection_level
+
+    print(f"{'Week':<6} {'Low demand':>12} {'High demand':>13} {'Total demand':>14} {'Total revenue':>15}")
+    print("-" * 65)
+
+    revenues      = []
+    high_demands  = []
+    total_demands = []
+
+    for i, low_demand in enumerate(low_price_demand_per_week):
+        week = i + 1 + week_offset
+        u             = np.random.uniform(0, 1)
+        norm_inv_draw = norm.ppf(u, loc=biz_mean, scale=biz_stdev)
+        high_demand   = min(max(norm_inv_draw, 0), protection_level)
+
+        low_sold    = min(low_demand, booking_limit)
+        high_sold   = min(high_demand, protection_level)
+        total       = low_sold + high_sold
+        revenue     = low_sold * LOW_PRICE + high_sold * HIGH_PRICE
+
+        high_demands.append(high_demand)
+        total_demands.append(total)
+        revenues.append(revenue)
+
+        print(f"{week:<6} {low_sold:>12.2f} {high_demand:>13.2f} {total:>14.2f} {revenue:>15,.2f}")
+
+    print("-" * 65)
+    print(f"{'Avg':<6} {np.mean(low_price_demand_per_week):>12.2f} "
+          f"{np.mean(high_demands):>13.2f} "
+          f"{np.mean(total_demands):>14.2f} "
+          f"{np.mean(revenues):>15,.2f}")
+    print(f"{'Std':<6} {np.std(low_price_demand_per_week):>12.2f} "
+          f"{np.std(high_demands):>13.2f} "
+          f"{np.std(total_demands):>14.2f} "
+          f"{np.std(revenues):>15,.2f}")
+    print(f"\nTotal cumulative revenue: ${sum(revenues):>12,.2f}")
+    print(f"Protection level used:    {protection_level} rooms  |  Booking limit: {booking_limit} rooms")
+
+    return high_demands, revenues
+
+
+np.random.seed(42)
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PHASE 1 — Weeks 1–10   (initial protection level = 25)
+# ═══════════════════════════════════════════════════════════════════════════════
+BIZ_MEAN_1  = 24
+BIZ_STDEV_1 = 3.76
+PROTECT_1   = 25
+
+print("=" * 65)
+print("PHASE 1: Weeks 1–10  (Protection Level = 25, Booking Limit = 75)")
+print("=" * 65)
+
+high1, rev1 = simulate([75] * 10, BIZ_MEAN_1, BIZ_STDEV_1, PROTECT_1, week_offset=0)
+
+# Update distribution from constrained observations (no unconstraining → spiral down)
+obs_mean = np.mean(high1)
+obs_std  = np.std(high1)
+new_protect = round(norm.ppf(CRITICAL_RATIO, obs_mean, obs_std))
+new_booking = HOTEL_CAPACITY - new_protect
+
+print(f"\n--- Updated demand distribution (constrained data, no unconstraining) ---")
+print(f"  Mean:                    {obs_mean:.5f}")
+print(f"  Std Dev:                 {obs_std:.2f}")
+print(f"  Optimal protection level:{new_protect}  ← down from 25 (Spiral Down!)")
+print(f"  New booking limit:       {new_booking}")
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# PHASE 2 — Weeks 11–20  (updated protection level from spiral-down)
+# ═══════════════════════════════════════════════════════════════════════════════
+print("\n" + "=" * 65)
+print(f"PHASE 2: Weeks 11–20  (Protection Level = {new_protect}, Booking Limit = {new_booking})")
+print("=" * 65)
+
+high2, rev2 = simulate([75] * 10, obs_mean, obs_std, new_protect, week_offset=10)
+
+# Show cumulative impact
+print(f"\n{'─'*65}")
+print(f"CUMULATIVE COMPARISON")
+print(f"{'─'*65}")
+print(f"  Phase 1 total revenue (wk 1–10):  ${sum(rev1):>12,.2f}")
+print(f"  Phase 2 total revenue (wk 11–20): ${sum(rev2):>12,.2f}")
+print(f"  Revenue lost to spiral-down:       ${sum(rev1)-sum(rev2):>12,.2f}")

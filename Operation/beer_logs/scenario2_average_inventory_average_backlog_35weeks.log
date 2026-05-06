@@ -1,0 +1,713 @@
+Scenario: Average inventory / Average backlog
+Weeks: 35 | Min target weeks: 3 | Max target weeks: 3 | Horizon: 6
+Demand plan: fluctuating preset (avg 100 over 35 weeks)
+
+Rolling optimization mode (scenario log run):
+Using provided demand plan; system optimizes and prints weekly summaries.
+
+--- Week 1 ---
+Customer demand this week (scenario): 80
+
+==========================================================================================
+Week 1 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  80  Recv:  50  Ship:  80  InvEnd:  70  BackEnd:   0  InvCost:  17.50  BackCost:   0.00  WeekCost:   17.50  Total:    17.50
+Wholesaler  | In:   0  Recv:  50  Ship:   0  InvEnd: 150  BackEnd:   0  InvCost:  37.50  BackCost:   0.00  WeekCost:   37.50  Total:    37.50
+Distributor | In:   0  Recv:  50  Ship:   0  InvEnd: 150  BackEnd:   0  InvCost:  37.50  BackCost:   0.00  WeekCost:   37.50  Total:    37.50
+Factory     | In:   0  Recv:  50  Ship:   0  InvEnd: 150  BackEnd:   0  InvCost:  37.50  BackCost:   0.00  WeekCost:   37.50  Total:    37.50
+==========================================================================================
+
+Week 1 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  100   (target=3 weeks)
+Wholesaler  -> Distributor:  100   (target=3 weeks)
+Distributor -> Factory    :  100   (target=3 weeks)
+Factory production         :  100   (target=3 weeks)
+==========================================================================================
+
+--- Week 2 ---
+Customer demand this week (scenario): 120
+
+==========================================================================================
+Week 2 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 120  Recv:  50  Ship: 120  InvEnd:   0  BackEnd:   0  InvCost:   0.00  BackCost:   0.00  WeekCost:    0.00  Total:    17.50
+Wholesaler  | In:   0  Recv:  50  Ship:   0  InvEnd: 200  BackEnd:   0  InvCost:  50.00  BackCost:   0.00  WeekCost:   50.00  Total:    87.50
+Distributor | In:   0  Recv:  50  Ship:   0  InvEnd: 200  BackEnd:   0  InvCost:  50.00  BackCost:   0.00  WeekCost:   50.00  Total:    87.50
+Factory     | In:   0  Recv:  50  Ship:   0  InvEnd: 200  BackEnd:   0  InvCost:  50.00  BackCost:   0.00  WeekCost:   50.00  Total:    87.50
+==========================================================================================
+
+Week 2 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  180   (target=3 weeks)
+Wholesaler  -> Distributor:  100   (target=3 weeks)
+Distributor -> Factory    :  100   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 3 ---
+Customer demand this week (scenario): 95
+
+==========================================================================================
+Week 3 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  95  Recv:   0  Ship:   0  InvEnd:   0  BackEnd:  95  InvCost:   0.00  BackCost:  95.00  WeekCost:   95.00  Total:   112.50
+Wholesaler  | In: 100  Recv:   0  Ship: 100  InvEnd: 100  BackEnd:   0  InvCost:  25.00  BackCost:   0.00  WeekCost:   25.00  Total:   112.50
+Distributor | In: 100  Recv:   0  Ship: 100  InvEnd: 100  BackEnd:   0  InvCost:  25.00  BackCost:   0.00  WeekCost:   25.00  Total:   112.50
+Factory     | In: 100  Recv: 100  Ship: 100  InvEnd: 200  BackEnd:   0  InvCost:  50.00  BackCost:   0.00  WeekCost:   50.00  Total:   137.50
+==========================================================================================
+
+Week 3 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  300   (target=3 weeks)
+Wholesaler  -> Distributor:  100   (target=3 weeks)
+Distributor -> Factory    :  100   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 4 ---
+Customer demand this week (scenario): 110
+
+==========================================================================================
+Week 4 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 110  Recv:   0  Ship:   0  InvEnd:   0  BackEnd: 205  InvCost:   0.00  BackCost: 205.00  WeekCost:  205.00  Total:   317.50
+Wholesaler  | In: 180  Recv:   0  Ship: 100  InvEnd:   0  BackEnd:  80  InvCost:   0.00  BackCost:  80.00  WeekCost:   80.00  Total:   192.50
+Distributor | In: 100  Recv:   0  Ship: 100  InvEnd:   0  BackEnd:   0  InvCost:   0.00  BackCost:   0.00  WeekCost:    0.00  Total:   112.50
+Factory     | In: 100  Recv:   0  Ship: 100  InvEnd: 100  BackEnd:   0  InvCost:  25.00  BackCost:   0.00  WeekCost:   25.00  Total:   162.50
+==========================================================================================
+
+Week 4 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  295   (target=3 weeks)
+Wholesaler  -> Distributor:  100   (target=3 weeks)
+Distributor -> Factory    :  100   (target=3 weeks)
+Factory production         :  100   (target=3 weeks)
+==========================================================================================
+
+--- Week 5 ---
+Customer demand this week (scenario): 90
+
+==========================================================================================
+Week 5 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  90  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 195  InvCost:   0.00  BackCost: 195.00  WeekCost:  195.00  Total:   512.50
+Wholesaler  | In: 300  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 280  InvCost:   0.00  BackCost: 280.00  WeekCost:  280.00  Total:   472.50
+Distributor | In: 100  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:   0  InvCost:   0.00  BackCost:   0.00  WeekCost:    0.00  Total:   112.50
+Factory     | In: 100  Recv:   0  Ship: 100  InvEnd:   0  BackEnd:   0  InvCost:   0.00  BackCost:   0.00  WeekCost:    0.00  Total:   162.50
+==========================================================================================
+
+Week 5 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  305   (target=3 weeks)
+Wholesaler  -> Distributor:  180   (target=3 weeks)
+Distributor -> Factory    :  100   (target=3 weeks)
+Factory production         :  100   (target=3 weeks)
+==========================================================================================
+
+--- Week 6 ---
+Customer demand this week (scenario): 130
+
+==========================================================================================
+Week 6 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 130  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 225  InvCost:   0.00  BackCost: 225.00  WeekCost:  225.00  Total:   737.50
+Wholesaler  | In: 295  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 475  InvCost:   0.00  BackCost: 475.00  WeekCost:  475.00  Total:   947.50
+Distributor | In: 100  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:   0  InvCost:   0.00  BackCost:   0.00  WeekCost:    0.00  Total:   112.50
+Factory     | In: 100  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:   0  InvCost:   0.00  BackCost:   0.00  WeekCost:    0.00  Total:   162.50
+==========================================================================================
+
+Week 6 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  295   (target=3 weeks)
+Wholesaler  -> Distributor:  380   (target=3 weeks)
+Distributor -> Factory    :  100   (target=3 weeks)
+Factory production         :  100   (target=3 weeks)
+==========================================================================================
+
+--- Week 7 ---
+Customer demand this week (scenario): 85
+
+==========================================================================================
+Week 7 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  85  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 210  InvCost:   0.00  BackCost: 210.00  WeekCost:  210.00  Total:   947.50
+Wholesaler  | In: 305  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 680  InvCost:   0.00  BackCost: 680.00  WeekCost:  680.00  Total:  1627.50
+Distributor | In: 180  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:  80  InvCost:   0.00  BackCost:  80.00  WeekCost:   80.00  Total:   192.50
+Factory     | In: 100  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:   0  InvCost:   0.00  BackCost:   0.00  WeekCost:    0.00  Total:   162.50
+==========================================================================================
+
+Week 7 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  325   (target=3 weeks)
+Wholesaler  -> Distributor:  575   (target=3 weeks)
+Distributor -> Factory    :  100   (target=3 weeks)
+Factory production         :  100   (target=3 weeks)
+==========================================================================================
+
+--- Week 8 ---
+Customer demand this week (scenario): 115
+
+==========================================================================================
+Week 8 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 115  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 225  InvCost:   0.00  BackCost: 225.00  WeekCost:  225.00  Total:  1172.50
+Wholesaler  | In: 295  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 875  InvCost:   0.00  BackCost: 875.00  WeekCost:  875.00  Total:  2502.50
+Distributor | In: 380  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 360  InvCost:   0.00  BackCost: 360.00  WeekCost:  360.00  Total:   552.50
+Factory     | In: 100  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:   0  InvCost:   0.00  BackCost:   0.00  WeekCost:    0.00  Total:   162.50
+==========================================================================================
+
+Week 8 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  310   (target=3 weeks)
+Wholesaler  -> Distributor:  780   (target=3 weeks)
+Distributor -> Factory    :  180   (target=3 weeks)
+Factory production         :  100   (target=3 weeks)
+==========================================================================================
+
+--- Week 9 ---
+Customer demand this week (scenario): 100
+
+==========================================================================================
+Week 9 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 100  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 225  InvCost:   0.00  BackCost: 225.00  WeekCost:  225.00  Total:  1397.50
+Wholesaler  | In: 325  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:1100  InvCost:   0.00  BackCost:1100.00  WeekCost: 1100.00  Total:  3602.50
+Distributor | In: 575  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 835  InvCost:   0.00  BackCost: 835.00  WeekCost:  835.00  Total:  1387.50
+Factory     | In: 100  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:   0  InvCost:   0.00  BackCost:   0.00  WeekCost:    0.00  Total:   162.50
+==========================================================================================
+
+Week 9 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  325   (target=3 weeks)
+Wholesaler  -> Distributor:  975   (target=3 weeks)
+Distributor -> Factory    :  460   (target=3 weeks)
+Factory production         :  100   (target=3 weeks)
+==========================================================================================
+
+--- Week 10 ---
+Customer demand this week (scenario): 105
+
+==========================================================================================
+Week 10 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 105  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 230  InvCost:   0.00  BackCost: 230.00  WeekCost:  230.00  Total:  1627.50
+Wholesaler  | In: 310  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:1310  InvCost:   0.00  BackCost:1310.00  WeekCost: 1310.00  Total:  4912.50
+Distributor | In: 780  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:1515  InvCost:   0.00  BackCost:1515.00  WeekCost: 1515.00  Total:  2902.50
+Factory     | In: 180  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:  80  InvCost:   0.00  BackCost:  80.00  WeekCost:   80.00  Total:   242.50
+==========================================================================================
+
+Week 10 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  325   (target=3 weeks)
+Wholesaler  -> Distributor: 1200   (target=3 weeks)
+Distributor -> Factory    :  935   (target=3 weeks)
+Factory production         :  100   (target=3 weeks)
+==========================================================================================
+
+--- Week 11 ---
+Customer demand this week (scenario): 75
+
+==========================================================================================
+Week 11 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  75  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 205  InvCost:   0.00  BackCost: 205.00  WeekCost:  205.00  Total:  1832.50
+Wholesaler  | In: 325  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:1535  InvCost:   0.00  BackCost:1535.00  WeekCost: 1535.00  Total:  6447.50
+Distributor | In: 975  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:2390  InvCost:   0.00  BackCost:2390.00  WeekCost: 2390.00  Total:  5292.50
+Factory     | In: 460  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 440  InvCost:   0.00  BackCost: 440.00  WeekCost:  440.00  Total:   682.50
+==========================================================================================
+
+Week 11 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  330   (target=3 weeks)
+Wholesaler  -> Distributor: 1410   (target=3 weeks)
+Distributor -> Factory    : 1615   (target=3 weeks)
+Factory production         :  180   (target=3 weeks)
+==========================================================================================
+
+--- Week 12 ---
+Customer demand this week (scenario): 125
+
+==========================================================================================
+Week 12 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 125  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 230  InvCost:   0.00  BackCost: 230.00  WeekCost:  230.00  Total:  2062.50
+Wholesaler  | In: 325  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:1760  InvCost:   0.00  BackCost:1760.00  WeekCost: 1760.00  Total:  8207.50
+Distributor | In:1200  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:3490  InvCost:   0.00  BackCost:3490.00  WeekCost: 3490.00  Total:  8782.50
+Factory     | In: 935  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:1275  InvCost:   0.00  BackCost:1275.00  WeekCost: 1275.00  Total:  1957.50
+==========================================================================================
+
+Week 12 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  305   (target=3 weeks)
+Wholesaler  -> Distributor: 1635   (target=3 weeks)
+Distributor -> Factory    : 2490   (target=3 weeks)
+Factory production         :  460   (target=3 weeks)
+==========================================================================================
+
+--- Week 13 ---
+Customer demand this week (scenario): 98
+
+==========================================================================================
+Week 13 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  98  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 228  InvCost:   0.00  BackCost: 228.00  WeekCost:  228.00  Total:  2290.50
+Wholesaler  | In: 330  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:1990  InvCost:   0.00  BackCost:1990.00  WeekCost: 1990.00  Total: 10197.50
+Distributor | In:1410  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:4800  InvCost:   0.00  BackCost:4800.00  WeekCost: 4800.00  Total: 13582.50
+Factory     | In:1615  Recv: 180  Ship: 180  InvEnd:   0  BackEnd:2710  InvCost:   0.00  BackCost:2710.00  WeekCost: 2710.00  Total:  4667.50
+==========================================================================================
+
+Week 13 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  330   (target=3 weeks)
+Wholesaler  -> Distributor: 1860   (target=3 weeks)
+Distributor -> Factory    : 3590   (target=3 weeks)
+Factory production         :  935   (target=3 weeks)
+==========================================================================================
+
+--- Week 14 ---
+Customer demand this week (scenario): 102
+
+==========================================================================================
+Week 14 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 102  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 230  InvCost:   0.00  BackCost: 230.00  WeekCost:  230.00  Total:  2520.50
+Wholesaler  | In: 305  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:2195  InvCost:   0.00  BackCost:2195.00  WeekCost: 2195.00  Total: 12392.50
+Distributor | In:1635  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:6335  InvCost:   0.00  BackCost:6335.00  WeekCost: 6335.00  Total: 19917.50
+Factory     | In:2490  Recv: 460  Ship: 460  InvEnd:   0  BackEnd:4740  InvCost:   0.00  BackCost:4740.00  WeekCost: 4740.00  Total:  9407.50
+==========================================================================================
+
+Week 14 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  328   (target=3 weeks)
+Wholesaler  -> Distributor: 2090   (target=3 weeks)
+Distributor -> Factory    : 4820   (target=3 weeks)
+Factory production         : 1615   (target=3 weeks)
+==========================================================================================
+
+--- Week 15 ---
+Customer demand this week (scenario): 88
+
+==========================================================================================
+Week 15 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  88  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 218  InvCost:   0.00  BackCost: 218.00  WeekCost:  218.00  Total:  2738.50
+Wholesaler  | In: 330  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:2425  InvCost:   0.00  BackCost:2425.00  WeekCost: 2425.00  Total: 14817.50
+Distributor | In:1860  Recv: 180  Ship: 180  InvEnd:   0  BackEnd:8015  InvCost:   0.00  BackCost:8015.00  WeekCost: 8015.00  Total: 27932.50
+Factory     | In:3590  Recv: 935  Ship: 935  InvEnd:   0  BackEnd:7395  InvCost:   0.00  BackCost:7395.00  WeekCost: 7395.00  Total: 16802.50
+==========================================================================================
+
+Week 15 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  330   (target=3 weeks)
+Wholesaler  -> Distributor: 2295   (target=3 weeks)
+Distributor -> Factory    : 5995   (target=3 weeks)
+Factory production         : 2490   (target=3 weeks)
+==========================================================================================
+
+--- Week 16 ---
+Customer demand this week (scenario): 112
+
+==========================================================================================
+Week 16 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 112  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 230  InvCost:   0.00  BackCost: 230.00  WeekCost:  230.00  Total:  2968.50
+Wholesaler  | In: 328  Recv: 100  Ship: 100  InvEnd:   0  BackEnd:2653  InvCost:   0.00  BackCost:2653.00  WeekCost: 2653.00  Total: 17470.50
+Distributor | In:2090  Recv: 460  Ship: 460  InvEnd:   0  BackEnd:9645  InvCost:   0.00  BackCost:9645.00  WeekCost: 9645.00  Total: 37577.50
+Factory     | In:4820  Recv:1615  Ship:1615  InvEnd:   0  BackEnd:10600  InvCost:   0.00  BackCost:10600.00  WeekCost:10600.00  Total: 27402.50
+==========================================================================================
+
+Week 16 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  318   (target=3 weeks)
+Wholesaler  -> Distributor: 2445   (target=3 weeks)
+Distributor -> Factory    : 6920   (target=3 weeks)
+Factory production         : 3590   (target=3 weeks)
+==========================================================================================
+
+--- Week 17 ---
+Customer demand this week (scenario): 92
+
+==========================================================================================
+Week 17 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  92  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 222  InvCost:   0.00  BackCost: 222.00  WeekCost:  222.00  Total:  3190.50
+Wholesaler  | In: 330  Recv: 180  Ship: 180  InvEnd:   0  BackEnd:2803  InvCost:   0.00  BackCost:2803.00  WeekCost: 2803.00  Total: 20273.50
+Distributor | In:2295  Recv: 935  Ship: 935  InvEnd:   0  BackEnd:11005  InvCost:   0.00  BackCost:11005.00  WeekCost:11005.00  Total: 48582.50
+Factory     | In:5995  Recv:2490  Ship:2490  InvEnd:   0  BackEnd:14105  InvCost:   0.00  BackCost:14105.00  WeekCost:14105.00  Total: 41507.50
+==========================================================================================
+
+Week 17 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  330   (target=3 weeks)
+Wholesaler  -> Distributor: 2313   (target=3 weeks)
+Distributor -> Factory    : 7395   (target=3 weeks)
+Factory production         : 4820   (target=3 weeks)
+==========================================================================================
+
+--- Week 18 ---
+Customer demand this week (scenario): 108
+
+==========================================================================================
+Week 18 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 108  Recv: 100  Ship: 100  InvEnd:   0  BackEnd: 230  InvCost:   0.00  BackCost: 230.00  WeekCost:  230.00  Total:  3420.50
+Wholesaler  | In: 318  Recv: 460  Ship: 460  InvEnd:   0  BackEnd:2661  InvCost:   0.00  BackCost:2661.00  WeekCost: 2661.00  Total: 22934.50
+Distributor | In:2445  Recv:1615  Ship:1615  InvEnd:   0  BackEnd:11835  InvCost:   0.00  BackCost:11835.00  WeekCost:11835.00  Total: 60417.50
+Factory     | In:6920  Recv:3590  Ship:3590  InvEnd:   0  BackEnd:17435  InvCost:   0.00  BackCost:17435.00  WeekCost:17435.00  Total: 58942.50
+==========================================================================================
+
+Week 18 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :  242   (target=3 weeks)
+Wholesaler  -> Distributor: 1708   (target=3 weeks)
+Distributor -> Factory    : 7200   (target=3 weeks)
+Factory production         : 5995   (target=3 weeks)
+==========================================================================================
+
+--- Week 19 ---
+Customer demand this week (scenario): 70
+
+==========================================================================================
+Week 19 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  70  Recv: 180  Ship: 180  InvEnd:   0  BackEnd: 120  InvCost:   0.00  BackCost: 120.00  WeekCost:  120.00  Total:  3540.50
+Wholesaler  | In: 330  Recv: 935  Ship: 935  InvEnd:   0  BackEnd:2056  InvCost:   0.00  BackCost:2056.00  WeekCost: 2056.00  Total: 24990.50
+Distributor | In:2313  Recv:2490  Ship:2490  InvEnd:   0  BackEnd:11658  InvCost:   0.00  BackCost:11658.00  WeekCost:11658.00  Total: 72075.50
+Factory     | In:7395  Recv:4820  Ship:4820  InvEnd:   0  BackEnd:20010  InvCost:   0.00  BackCost:20010.00  WeekCost:20010.00  Total: 78952.50
+==========================================================================================
+
+Week 19 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:  411   (target=3 weeks)
+Distributor -> Factory    : 6055   (target=3 weeks)
+Factory production         : 6920   (target=3 weeks)
+==========================================================================================
+
+--- Week 20 ---
+Customer demand this week (scenario): 140
+
+==========================================================================================
+Week 20 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 140  Recv: 460  Ship: 260  InvEnd: 200  BackEnd:   0  InvCost:  50.00  BackCost:   0.00  WeekCost:   50.00  Total:  3590.50
+Wholesaler  | In: 242  Recv:1615  Ship:1615  InvEnd:   0  BackEnd: 683  InvCost:   0.00  BackCost: 683.00  WeekCost:  683.00  Total: 25673.50
+Distributor | In:1708  Recv:3590  Ship:3590  InvEnd:   0  BackEnd:9776  InvCost:   0.00  BackCost:9776.00  WeekCost: 9776.00  Total: 81851.50
+Factory     | In:7200  Recv:5995  Ship:5995  InvEnd:   0  BackEnd:21215  InvCost:   0.00  BackCost:21215.00  WeekCost:21215.00  Total:100167.50
+==========================================================================================
+
+Week 20 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    : 3548   (target=3 weeks)
+Factory production         : 7395   (target=3 weeks)
+==========================================================================================
+
+--- Week 21 ---
+Customer demand this week (scenario): 96
+
+==========================================================================================
+Week 21 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  96  Recv: 935  Ship:  96  InvEnd:1039  BackEnd:   0  InvCost: 259.75  BackCost:   0.00  WeekCost:  259.75  Total:  3850.25
+Wholesaler  | In:   0  Recv:2490  Ship: 683  InvEnd:1807  BackEnd:   0  InvCost: 451.75  BackCost:   0.00  WeekCost:  451.75  Total: 26125.25
+Distributor | In: 411  Recv:4820  Ship:4820  InvEnd:   0  BackEnd:5367  InvCost:   0.00  BackCost:5367.00  WeekCost: 5367.00  Total: 87218.50
+Factory     | In:6055  Recv:6920  Ship:6920  InvEnd:   0  BackEnd:20350  InvCost:   0.00  BackCost:20350.00  WeekCost:20350.00  Total:120517.50
+==========================================================================================
+
+Week 21 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         : 7200   (target=3 weeks)
+==========================================================================================
+
+--- Week 22 ---
+Customer demand this week (scenario): 104
+
+==========================================================================================
+Week 22 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 104  Recv:1615  Ship: 104  InvEnd:2550  BackEnd:   0  InvCost: 637.50  BackCost:   0.00  WeekCost:  637.50  Total:  4487.75
+Wholesaler  | In:   0  Recv:3590  Ship:   0  InvEnd:5397  BackEnd:   0  InvCost:1349.25  BackCost:   0.00  WeekCost: 1349.25  Total: 27474.50
+Distributor | In:   0  Recv:5995  Ship:5367  InvEnd: 628  BackEnd:   0  InvCost: 157.00  BackCost:   0.00  WeekCost:  157.00  Total: 87375.50
+Factory     | In:3548  Recv:7395  Ship:7395  InvEnd:   0  BackEnd:16503  InvCost:   0.00  BackCost:16503.00  WeekCost:16503.00  Total:137020.50
+==========================================================================================
+
+Week 22 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         : 6055   (target=3 weeks)
+==========================================================================================
+
+--- Week 23 ---
+Customer demand this week (scenario): 86
+
+==========================================================================================
+Week 23 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  86  Recv: 683  Ship:  86  InvEnd:3147  BackEnd:   0  InvCost: 786.75  BackCost:   0.00  WeekCost:  786.75  Total:  5274.50
+Wholesaler  | In:   0  Recv:4820  Ship:   0  InvEnd:10217  BackEnd:   0  InvCost:2554.25  BackCost:   0.00  WeekCost: 2554.25  Total: 30028.75
+Distributor | In:   0  Recv:6920  Ship:   0  InvEnd:7548  BackEnd:   0  InvCost:1887.00  BackCost:   0.00  WeekCost: 1887.00  Total: 89262.50
+Factory     | In:   0  Recv:7200  Ship:7200  InvEnd:   0  BackEnd:9303  InvCost:   0.00  BackCost:9303.00  WeekCost: 9303.00  Total:146323.50
+==========================================================================================
+
+Week 23 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         : 3548   (target=3 weeks)
+==========================================================================================
+
+--- Week 24 ---
+Customer demand this week (scenario): 114
+
+==========================================================================================
+Week 24 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 114  Recv:   0  Ship: 114  InvEnd:3033  BackEnd:   0  InvCost: 758.25  BackCost:   0.00  WeekCost:  758.25  Total:  6032.75
+Wholesaler  | In:   0  Recv:5367  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 33924.75
+Distributor | In:   0  Recv:7395  Ship:   0  InvEnd:14943  BackEnd:   0  InvCost:3735.75  BackCost:   0.00  WeekCost: 3735.75  Total: 92998.25
+Factory     | In:   0  Recv:6055  Ship:6055  InvEnd:   0  BackEnd:3248  InvCost:   0.00  BackCost:3248.00  WeekCost: 3248.00  Total:149571.50
+==========================================================================================
+
+Week 24 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 25 ---
+Customer demand this week (scenario): 94
+
+==========================================================================================
+Week 25 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  94  Recv:   0  Ship:  94  InvEnd:2939  BackEnd:   0  InvCost: 734.75  BackCost:   0.00  WeekCost:  734.75  Total:  6767.50
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 37820.75
+Distributor | In:   0  Recv:7200  Ship:   0  InvEnd:22143  BackEnd:   0  InvCost:5535.75  BackCost:   0.00  WeekCost: 5535.75  Total: 98534.00
+Factory     | In:   0  Recv:3548  Ship:3248  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:149646.50
+==========================================================================================
+
+Week 25 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 26 ---
+Customer demand this week (scenario): 106
+
+==========================================================================================
+Week 26 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 106  Recv:   0  Ship: 106  InvEnd:2833  BackEnd:   0  InvCost: 708.25  BackCost:   0.00  WeekCost:  708.25  Total:  7475.75
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 41716.75
+Distributor | In:   0  Recv:6055  Ship:   0  InvEnd:28198  BackEnd:   0  InvCost:7049.50  BackCost:   0.00  WeekCost: 7049.50  Total:105583.50
+Factory     | In:   0  Recv:   0  Ship:   0  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:149721.50
+==========================================================================================
+
+Week 26 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 27 ---
+Customer demand this week (scenario): 82
+
+==========================================================================================
+Week 27 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  82  Recv:   0  Ship:  82  InvEnd:2751  BackEnd:   0  InvCost: 687.75  BackCost:   0.00  WeekCost:  687.75  Total:  8163.50
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 45612.75
+Distributor | In:   0  Recv:3248  Ship:   0  InvEnd:31446  BackEnd:   0  InvCost:7861.50  BackCost:   0.00  WeekCost: 7861.50  Total:113445.00
+Factory     | In:   0  Recv:   0  Ship:   0  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:149796.50
+==========================================================================================
+
+Week 27 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 28 ---
+Customer demand this week (scenario): 118
+
+==========================================================================================
+Week 28 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 118  Recv:   0  Ship: 118  InvEnd:2633  BackEnd:   0  InvCost: 658.25  BackCost:   0.00  WeekCost:  658.25  Total:  8821.75
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 49508.75
+Distributor | In:   0  Recv:   0  Ship:   0  InvEnd:31446  BackEnd:   0  InvCost:7861.50  BackCost:   0.00  WeekCost: 7861.50  Total:121306.50
+Factory     | In:   0  Recv:   0  Ship:   0  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:149871.50
+==========================================================================================
+
+Week 28 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 29 ---
+Customer demand this week (scenario): 97
+
+==========================================================================================
+Week 29 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  97  Recv:   0  Ship:  97  InvEnd:2536  BackEnd:   0  InvCost: 634.00  BackCost:   0.00  WeekCost:  634.00  Total:  9455.75
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 53404.75
+Distributor | In:   0  Recv:   0  Ship:   0  InvEnd:31446  BackEnd:   0  InvCost:7861.50  BackCost:   0.00  WeekCost: 7861.50  Total:129168.00
+Factory     | In:   0  Recv:   0  Ship:   0  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:149946.50
+==========================================================================================
+
+Week 29 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 30 ---
+Customer demand this week (scenario): 103
+
+==========================================================================================
+Week 30 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 103  Recv:   0  Ship: 103  InvEnd:2433  BackEnd:   0  InvCost: 608.25  BackCost:   0.00  WeekCost:  608.25  Total: 10064.00
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 57300.75
+Distributor | In:   0  Recv:   0  Ship:   0  InvEnd:31446  BackEnd:   0  InvCost:7861.50  BackCost:   0.00  WeekCost: 7861.50  Total:137029.50
+Factory     | In:   0  Recv:   0  Ship:   0  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:150021.50
+==========================================================================================
+
+Week 30 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 31 ---
+Customer demand this week (scenario): 89
+
+==========================================================================================
+Week 31 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  89  Recv:   0  Ship:  89  InvEnd:2344  BackEnd:   0  InvCost: 586.00  BackCost:   0.00  WeekCost:  586.00  Total: 10650.00
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 61196.75
+Distributor | In:   0  Recv:   0  Ship:   0  InvEnd:31446  BackEnd:   0  InvCost:7861.50  BackCost:   0.00  WeekCost: 7861.50  Total:144891.00
+Factory     | In:   0  Recv:   0  Ship:   0  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:150096.50
+==========================================================================================
+
+Week 31 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 32 ---
+Customer demand this week (scenario): 111
+
+==========================================================================================
+Week 32 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 111  Recv:   0  Ship: 111  InvEnd:2233  BackEnd:   0  InvCost: 558.25  BackCost:   0.00  WeekCost:  558.25  Total: 11208.25
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 65092.75
+Distributor | In:   0  Recv:   0  Ship:   0  InvEnd:31446  BackEnd:   0  InvCost:7861.50  BackCost:   0.00  WeekCost: 7861.50  Total:152752.50
+Factory     | In:   0  Recv:   0  Ship:   0  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:150171.50
+==========================================================================================
+
+Week 32 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 33 ---
+Customer demand this week (scenario): 93
+
+==========================================================================================
+Week 33 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  93  Recv:   0  Ship:  93  InvEnd:2140  BackEnd:   0  InvCost: 535.00  BackCost:   0.00  WeekCost:  535.00  Total: 11743.25
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 68988.75
+Distributor | In:   0  Recv:   0  Ship:   0  InvEnd:31446  BackEnd:   0  InvCost:7861.50  BackCost:   0.00  WeekCost: 7861.50  Total:160614.00
+Factory     | In:   0  Recv:   0  Ship:   0  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:150246.50
+==========================================================================================
+
+Week 33 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 34 ---
+Customer demand this week (scenario): 107
+
+==========================================================================================
+Week 34 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In: 107  Recv:   0  Ship: 107  InvEnd:2033  BackEnd:   0  InvCost: 508.25  BackCost:   0.00  WeekCost:  508.25  Total: 12251.50
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 72884.75
+Distributor | In:   0  Recv:   0  Ship:   0  InvEnd:31446  BackEnd:   0  InvCost:7861.50  BackCost:   0.00  WeekCost: 7861.50  Total:168475.50
+Factory     | In:   0  Recv:   0  Ship:   0  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:150321.50
+==========================================================================================
+
+Week 34 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+--- Week 35 ---
+Customer demand this week (scenario): 60
+
+==========================================================================================
+Week 35 Summary
+------------------------------------------------------------------------------------------
+Retailer    | In:  60  Recv:   0  Ship:  60  InvEnd:1973  BackEnd:   0  InvCost: 493.25  BackCost:   0.00  WeekCost:  493.25  Total: 12744.75
+Wholesaler  | In:   0  Recv:   0  Ship:   0  InvEnd:15584  BackEnd:   0  InvCost:3896.00  BackCost:   0.00  WeekCost: 3896.00  Total: 76780.75
+Distributor | In:   0  Recv:   0  Ship:   0  InvEnd:31446  BackEnd:   0  InvCost:7861.50  BackCost:   0.00  WeekCost: 7861.50  Total:176337.00
+Factory     | In:   0  Recv:   0  Ship:   0  InvEnd: 300  BackEnd:   0  InvCost:  75.00  BackCost:   0.00  WeekCost:   75.00  Total:150396.50
+==========================================================================================
+
+Week 35 Recommended Orders (optimized)
+------------------------------------------------------------------------------------------
+Retailer    -> Wholesaler :    0   (target=3 weeks)
+Wholesaler  -> Distributor:    0   (target=3 weeks)
+Distributor -> Factory    :    0   (target=3 weeks)
+Factory production         :    0   (target=3 weeks)
+==========================================================================================
+
+ROLLING OPTIMIZATION COMPLETE
+Total system cost (sum of all roles): $416259.00
+ - Retailer   : $12744.75
+ - Wholesaler : $76780.75
+ - Distributor: $176337.00
+ - Factory    : $150396.50
